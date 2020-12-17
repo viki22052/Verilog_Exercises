@@ -1,0 +1,25 @@
+module 4_bit_ALU(opd_int, opt_int, out);
+  
+  input [3:0]opd_int_1;
+  input [3:0]opd_int_2;
+  input [1:0]opt_int;
+  output reg [4:0]out;
+  
+  wire mult, add, substr, shift;
+  
+  always @(opd_int_1 or opt_int or opd_int_2)
+    begin
+      add = opd_int_1 + opd_int_2;
+      mult = opd_int_1*opd_int_2;
+      substr = opd_int_1 - opd_int_2;
+      shift = opd_int_1 >> opd_int_2;
+      case(opt_int)
+        2'b00: add > 4'b1111 ? out = {1'b1, add} : out = {1'b0, add};//addition
+        2'b01: opd_int_2 > opd_int_1 ? out = {1'b1, substr} : out = {1'b0, substr};//substr
+        2'b10: mult > 4'b1111 ? out = {1'b1, mult} : out = {1'b0, mult};//multiplication
+        2'b11: out = {1'b0, shift};
+        default: out = 4'bxxxx;
+      endcase
+    end 
+endmodule        
+  

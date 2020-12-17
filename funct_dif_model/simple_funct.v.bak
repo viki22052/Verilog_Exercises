@@ -1,0 +1,8 @@
+module funct(f, a, b, c);
+
+reg a, b, c;
+wire f;
+
+assign f = a | b&~c;
+
+endmodule

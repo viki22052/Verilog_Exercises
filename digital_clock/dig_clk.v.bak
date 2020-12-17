@@ -1,0 +1,33 @@
+`timescale 1s/100ns
+
+module dig_clk(clk, min_u, min_t, hour_u, hour_t);
+  input clk;
+  output [3:0] min_u, min_t, hour_u, hour_t;
+  reg [3:0] min_u, min_t, hour_u, hour_t;
+  
+  always @ (clk) begin
+    
+    min_u = min_u + 1;
+    if(min_u == 4'b1001)begin
+      min_t = min_t + 1;
+      if(min_t == 4'b0101 && min_u == 4'b1001)begin
+        hour_u = hour_u + 1;
+        if(hour_u == 4'b1001 && min_t == 4'b0101 && min_u == 4'b1001)begin
+          hour_t = hour_t + 1;
+          if(hour_t == 4'b0010 && hour_u == 4'b1001 && min_t == 4'b0101 && min_u == 4'b1001)begin
+            hour_t = 4'b0000;
+            hour_u = 4'b0000;
+            min_t = 4'b0000;
+            min_u = 4'b0000;
+          end
+          hour_u = 4'b0000;
+          min_t = 4'b0000;
+          min_u = 4'b0000;
+        end 	
+        min_t = 4'b0000;
+        min_u = 4'b0000;
+      end
+      min_u = 4'b0000;
+    end
+  end
+endmodule

@@ -1,0 +1,15 @@
+`timescale 1s/100ns
+
+module dig_clk_TB();
+  reg clk;
+  wire [3:0] min_u, min_t, hour_u, hour_t;
+  
+  dig_clk clk_mod(clk, min_u, min_t, hour_u, hour_t);
+  
+  always #1 clk = ~clk;
+  initial begin
+    $dumpfile("clk_waves.vcd");
+    $dumpvars(1, dig_clk_TB);
+    clk = 1;
+  end
+endmodule
