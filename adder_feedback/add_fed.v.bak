@@ -1,0 +1,33 @@
+module sum_add(din, ext_in, out);
+  input [15:0] din, ext_in;
+  output [15:0] out; 
+  
+  
+  assign out = din + ext_in;
+  
+endmodule
+
+module reg_add(in, dout);
+  input [15:0] in;
+  output [15:0] dout;
+  
+  
+  assign dout = in;
+endmodule
+
+module add_fed(din, clk, dout);
+  input [15:0] din;
+  input clk;
+  output [15:0] dout;
+  reg [15:0] dout;
+  wire [15:0] out_sum;
+  
+  always @(din) begin
+  sum_add bl1(din, dout, out_sum);
+  end
+  
+  always @(posedge clk) begin
+  reg_add bl2(out_sum, dout);
+  end
+  
+endmodule

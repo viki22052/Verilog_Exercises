@@ -1,0 +1,27 @@
+`timescale 1ns/100ps
+
+module add_fett_TB();
+  reg [15:0] din; 
+  reg clk;
+  wire [15:0] dout;
+  
+  add_fed add(din, clk, dout);
+  initial begin
+    clk = 0;
+    $dumpfile("waves.vcd");
+    $dumpvars(1,add_fett_TB);
+  end
+  
+  always #100 clk = ~clk;
+  
+  always @(din or dout) begin
+    din = 16'd12;
+    #150
+    din = 16'd10;
+    #150
+    $finish;
+  end
+endmodule
+  
+    
+  
