@@ -1,0 +1,31 @@
+module d_flip(din, clk, res, q, revq)
+
+input din, clk, res;
+output q, revq;
+
+assign revq = ~q;
+
+always @(clk) begin
+
+if(res == 0)
+q = 0;
+
+else 
+q = din;
+end
+endmodule
+
+module valid_in(din, clk, out)
+
+input din, clk, res;
+output revq;
+wire q1, revq1, q2, revq2;
+
+always @(posedge din and clk) begin
+
+d_flip one(din, clk, res, q1, revq1);
+d_flip two(q1, clk, res, q2, revq2);
+and(out, q1, revq2);
+end
+endmodule
+

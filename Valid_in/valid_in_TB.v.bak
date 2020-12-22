@@ -1,0 +1,30 @@
+`timescale 1ns/100ps
+
+module valid_in_TB()
+reg din, clk, res;
+wire out;
+
+valid_in mod(din, clk, res, out);
+
+initial begin
+clk = 0;
+res = 0;
+#50
+res = 1;
+
+$dumpfile("test.vcd");
+$dumpvars(1,valid_in_TB);
+
+end
+
+always #50 clk = ~clk;
+
+always @(posedge din and clk) begin
+
+#25
+din = 1;
+#100
+din = 0;
+
+end
+
