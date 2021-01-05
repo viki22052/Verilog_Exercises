@@ -1,0 +1,60 @@
+module fifo(din, wr_en, rd_en, clk, res, dout, empt, full);
+
+input [31:0] din;
+input wr_en, rd_en, clk, res;
+output reg [31:0] dout;
+output reg empt, full;
+
+reg [31:0]buff[0:7];
+reg [2:0] count, rdcount, wrcount;
+
+	if(count == 8)
+		full = 1'b1;
+	else
+		full = 1'b0;
+	else if(count == 0)
+		empt = 1'b1;
+	else
+		empt = 1'b0;
+		
+always @(posedge clk) begin
+
+	if(res) begin
+		rdcount = 0;
+		wrcount = 0;
+	end
+	
+	if(wr_en == 1'b1 && count <= 7) begin
+		buff[wrcount] = din;
+		wrcount = wrcount + 1;
+	end
+	
+	if(rd_en == 1'b1 && count != 0) begin
+		dout = buff[rdcount];
+		rdcount = rdcount + 1;
+	end
+	
+	if(wrcount == 7)
+		wrcount = 0;
+		
+	if(rdcount == 7)
+		rdcount = 0;
+		
+	if(wrcount > rdcount)
+		count = wrcount - rdcount;
+		
+	if(wrcount < rdcount)
+		count = rdcount - wrcount;
+end
+endmodule
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
