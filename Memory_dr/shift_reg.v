@@ -17,7 +17,7 @@ module shift_reg(clk, datain, vin, dataout);
 			
 			end
 			
-		conc_par = {conc_par[30:0], datain};
+		conc_par = {conc_par[23:0], datain};
 			
 		end
 	endmodule

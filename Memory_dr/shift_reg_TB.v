@@ -11,6 +11,7 @@ module shift_reg_TB();
   initial begin
     clk = 0;
     vin = 1'b0;
+	 datain = 0;
     $dumpfile("waves.vcd");
     $dumpvars(1,shift_reg_TB);
     
